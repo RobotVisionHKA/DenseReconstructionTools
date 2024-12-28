@@ -1,0 +1,230 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Realsense Recording and Conversion to EuRoC &mdash; Dense Reconstruction Toolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="TUM-VI Rectification" href="tumvi.html" />
+    <link rel="prev" title="Euroc Preparation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Dense Reconstruction Toolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/quickstart.html">Quick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Euroc Preparation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Realsense Recording and Conversion to EuRoC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#librealsense-installation">LibRealsense Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-collection">Data Collection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conversion-of-bag-file-to-euroc">Conversion of Bag file to Euroc</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tumvi.html">TUM-VI Rectification</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../trajectory_visualization/index.html">Trajectory Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../extras/index.html">Extras</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Third-Party Tools:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../third-party-tools/basalt.html">Basalt - Visual Inertial Odometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../third-party-tools/monorec.html">MonoRec - Dense Reconstruction</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Community:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../developers.html">Main developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Dense Reconstruction Toolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Euroc Preparation</a></li>
+      <li class="breadcrumb-item active">Realsense Recording and Conversion to EuRoC</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/documentation/euroc-preparation/realsense_bag.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="realsense-recording-and-conversion-to-euroc">
+<h1>Realsense Recording and Conversion to EuRoC<a class="headerlink" href="#realsense-recording-and-conversion-to-euroc" title="Link to this heading"></a></h1>
+<p>A sequence is recorded from the RealSense Depth Camera D455.
+This is done using the <em>realsense-viewer</em> tool from <a class="reference external" href="https://github.com/IntelRealSense/librealsense">librealsense</a>.</p>
+<section id="librealsense-installation">
+<h2>LibRealsense Installation<a class="headerlink" href="#librealsense-installation" title="Link to this heading"></a></h2>
+<p>Installation of <em>librealsense</em> can be followed from <a class="reference external" href="https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md">here</a>
+which supports Ubuntu LTS kernels 4.4, 4.8, 4.10, 4.13, 4.15, 4.18*, 5.0*, 5.3* and 5.4. Installation from source
+can also be done from <a class="reference external" href="https://github.com/IntelRealSense/librealsense/blob/master/doc/installation.md">here</a>.
+A source-code build of the SDK supports newer kernels (5.8 and 5.11). Unsupported kernels can be used with the SDK
+but there may be unpredictable consequences in regards to stability. Finally, the SDK was installed
+(partially, some dependency matches failed and errors due to unsupported kernel version) on
+the kernel version 5.17.5. <a class="reference external" href="https://github.com/IntelRealSense/librealsense/issues/10581">[ref]</a></p>
+</section>
+<section id="data-collection">
+<h2>Data Collection<a class="headerlink" href="#data-collection" title="Link to this heading"></a></h2>
+<p>In total, 3 sequences were recorded whose bag file can be found <a class="reference external" href="https://drive.google.com/drive/folders/16aTFunFtIfq2zIJ8XRTeHbgc-WwfgCHx?usp=sharing">here</a>:</p>
+<ol class="arabic simple">
+<li><p><strong>hka-indoors-1</strong>: Sequence recorded indoors outside the lab on the left</p></li>
+<li><p><strong>hka-indoors-2</strong>: Sequence recorded indoors outside the lab on the right</p></li>
+<li><p><strong>hka-outdoors-1</strong>: Sequence recorded in front of Building F, around the hole</p></li>
+</ol>
+<p>During recording, the following sensors were streaming data:</p>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>StereoModule:</dt><dd><ul class="simple">
+<li><p>Left and Right stereo images from Infrared cameras</p></li>
+<li><p>Projector - <code class="code docutils literal notranslate"><span class="pre">off</span></code></p></li>
+<li><p>Depth feed - <code class="code docutils literal notranslate"><span class="pre">off</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>RGB Camera:</dt><dd><ul class="simple">
+<li><p>In the future, RGB frames can be used for the MonRec dense reconstruction network instead of the left stereo image</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Motion Module:</dt><dd><ul class="simple">
+<li><p>Gyroscope</p></li>
+<li><p>Accelerometer</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ol>
+<p><strong>Important parameters to take note of while recording:</strong></p>
+<ol class="arabic simple">
+<li><p>In the indoor sequences there was a lot of motion blur due to low exposure times and as a result, basalt vo was failing to track keypoints. A solution would be to reduce the Auto Exposure limit setting to 5ms (or even lower) in the StereoModule settings.</p></li>
+<li><p>The Accel and Gyro readings are not synchronized. [<a class="reference external" href="https://github.com/IntelRealSense/librealsense/issues/3921">ref</a>]</p></li>
+<li><p>The RGB and stereo images are not synchronized. However, they can be synced by turning the AE Priority off in the RGB Module. [<a class="reference external" href="https://github.com/IntelRealSense/librealsense/issues/774#issuecomment-454358565">ref</a>]</p></li>
+</ol>
+</section>
+<section id="conversion-of-bag-file-to-euroc">
+<h2>Conversion of Bag file to Euroc<a class="headerlink" href="#conversion-of-bag-file-to-euroc" title="Link to this heading"></a></h2>
+<p>The recording from the <em>realsense-viewer</em> is by default saved as a bag file.
+Sensor information must be extracted from the bag file into the proper Euroc format so that Basalt (VIO) and
+MonoRec (dense reconstruction) can be run on them. This is done using the python
+package <a class="reference external" href="https://pypi.org/project/rosbags/">rosbag</a> in the <a class="reference external" href="https://github.com/hardik01shah/DenseReconstructionTools/blob/master/euroc-preparation/realsense_bag/bag2euroc.py">bag2euroc.py</a> script.
+<strong>Basalt requires that the Accel and Gyro values are synced and that both sensor information should be available for a timestamp at the same frame rate.</strong>
+Hence, linear interpolation is done of the Accel values of the two nearest timestamps for each Gyro value.
+Running the script:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: bag2euroc.py [-h] bag_path euroc_path
+
+Python code for conversion of realsense bag file to euroc format.
+
+positional arguments:
+  bag_path    path to rosbag file
+  euroc_path  path to euroc dataset
+
+optional arguments:
+  -h, --help  show this help message and exit
+
+E.g.
+python3 bag2euroc.py ./final.bag ./euroc/
+</pre></div>
+</div>
+<p>There were other methods of extracting the data from a bagfile:
+1. <a class="reference external" href="https://github.com/hardik01shah/DenseReconstructionTools/blob/master/euroc-preparation/realsense_bag/bag2euroc_playback.py">bag2euroc_playback.py</a> is a rospy script (requires a ros installation).
+The bag file needs to be played using <em>rosbag play</em> and the script is basically a ROS subscriber which subscribes to the topics of interest and saves sensor information.</p>
+<blockquote>
+<div><div class="highlight-text notranslate"><div class="highlight"><pre><span></span>usage: (execute in 3 different terminals)
+1. roscore
+2. rosbag play -d 10 test.bag
+3. python3 bag2euroc.py &lt;path to euroc dataset&gt;
+
+* the second command waits for 10s after advertising the topics before streaming the data on the topics. It is for the subscriber to have enough time to latch onto the topics.
+</pre></div>
+</div>
+</div></blockquote>
+<p>2. Another python package <em>bagpy</em> is used to extract the data into .csv files.
+Demonstrated in <a class="reference external" href="https://github.com/hardik01shah/DenseReconstructionTools/blob/master/euroc-preparation/realsense_bag/bagpy_test.ipynb">bagpy_test.ipynb</a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Euroc Preparation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tumvi.html" class="btn btn-neutral float-right" title="TUM-VI Rectification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Robot Vision Lab, HKA. Author(s): Hardik Shah, Niclas Zeller.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

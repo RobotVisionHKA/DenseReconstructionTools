@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MonoRec - Dense Reconstruction &mdash; Dense Reconstruction Toolkit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Main developers" href="../developers.html" />
+    <link rel="prev" title="Basalt - Visual Inertial Odometry" href="basalt.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Dense Reconstruction Toolkit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Tutorials:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Home</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/quickstart.html">Quick Start</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/euroc-preparation/index.html">Euroc Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/trajectory_visualization/index.html">Trajectory Visualization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/extras/index.html">Extras</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Third-Party Tools:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="basalt.html">Basalt - Visual Inertial Odometry</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">MonoRec - Dense Reconstruction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tum-vi-dataloader">TUM-VI dataloader</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pointcloud-visualization-using-open3d">PointCloud Visualization using open3d</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inference">Inference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pointcloud-generation">Pointcloud generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#training">Training</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#important-hyperparameters-for-tum-vi-realsense-bag">Important Hyperparameters for TUM-VI/RealSense-Bag</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Community:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developers.html">Main developers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Dense Reconstruction Toolkit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">MonoRec - Dense Reconstruction</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/third-party-tools/monorec.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="monorec-dense-reconstruction">
+<h1>MonoRec - Dense Reconstruction<a class="headerlink" href="#monorec-dense-reconstruction" title="Link to this heading"></a></h1>
+<p>This is a clone of the <a class="reference external" href="https://github.com/Brummi/MonoRec">MonoRec</a> repository with changes
+to run inference and train on Euroc type datasets, specifically the
+<a class="reference external" href="https://vision.in.tum.de/data/datasets/visual-inertial-dataset">TUM-VI</a> dataset.</p>
+<p>The tum-vi dataset is a visual inertial dataset that contains sequences recorded from a handheld
+setup consisting of a stereo setup with two cameras (fisheye lens). The images are grayscale.
+It also provides synchronized IMU data (gyro and accel).</p>
+<p>The primary additions are:</p>
+<ol class="arabic simple">
+<li><p>Custom dataloader for tum-vi/euroc-format datasets</p></li>
+<li><p>Alternate script for viewing pointclouds using the
+<a class="reference external" href="http://www.open3d.org/docs/latest/index.html">Open3D</a> library</p></li>
+</ol>
+<section id="tum-vi-dataloader">
+<h2>TUM-VI dataloader<a class="headerlink" href="#tum-vi-dataloader" title="Link to this heading"></a></h2>
+<p>The <a class="reference external" href="https://github.com/RobotVisionHKA/MonoRec/blob/main/data_loader/tum_vi_dataset.py">tum-vi dataloader</a> has been written in a way so that
+it expects the dataset to be in a specific format as shown below:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>dataset-dir
+    ├── 00
+    |    ├── basalt_keyframe_data
+    |    │   ├── keypoints
+    |    │   ├── keypoints_viz
+    |    │   └── poses
+    |    ├── dso
+    |    │   ├── cam0
+    |    │   │   └── images -&gt; ../../mav0/cam0/data
+    |    │   └── cam1
+    |    │       └── images -&gt; ../../mav0/cam1/data
+    |    ├── mav0
+    |        ├── cam0
+    |        │   └── data
+    |        ├── cam1
+    |        │   └── data
+    |        ├── imu0
+    |        └── mocap0
+    ├── 01
+    ...
+</pre></div>
+</div>
+<p>The overall pipeline of dataloading goes as follows:</p>
+<ol class="arabic">
+<li><p>Load camera intrinsics for each sequence</p></li>
+<li><p>Format the intrinsics according to the target image size</p></li>
+<li><p>Load the poses, left stereo images, right stereo images and sparse depth keypoints</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>The primary key is the poses i.e. only those timestamps for which keyframe pose is available is included in the dataset</p></li>
+<li><p>Poses are loaded and stored directly in the memory on initialization</p></li>
+<li><p>Stereo images and keypoints paths are stored on initialization and are accessed from the memory only during the <code class="docutils literal notranslate"><span class="pre">_get_item()</span></code> call</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Accessing images:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>convert to 3-channel image</p></li>
+<li><p>image is first resized (if applicable) and then cropped to the target image size</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Accessing keypoints:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">.txt</span></code> file containing the keypoints is read</p></li>
+<li><p>check for invalid entry i.e. nans or index out of bounds of the original image size</p></li>
+<li><p>scale the keypoints according to the target image size and add to depth tensor</p></li>
+<li><p>crop the depth tensor to target image size</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>python dictionaries have been used for the above implementation. Good references for effective dataloader implementations [<a class="reference external" href="https://discuss.pytorch.org/t/how-to-prefetch-data-when-processing-with-gpu/548/19">ref1</a>] [<a class="reference external" href="https://discuss.pytorch.org/t/problem-with-dataloader-when-using-list-of-dicts/67268/4">ref2</a>]</p>
+</div>
+</section>
+<section id="pointcloud-visualization-using-open3d">
+<h2>PointCloud Visualization using open3d<a class="headerlink" href="#pointcloud-visualization-using-open3d" title="Link to this heading"></a></h2>
+<p>The <a class="reference external" href="https://github.com/RobotVisionHKA/MonoRec/blob/main/rgbd2pcl.py">rgbd2pcl.py</a> script is used to generate and view pointclouds from the keyframe,
+predicted depth, camera intrinsics and extrinsics. It also saves the keyframes and the predicted depth maps
+in the save directory mentioned in the config file (can be used for debugging). It uses Open3d for the same.
+[<a class="reference external" href="http://www.open3d.org/docs/latest/tutorial/Advanced/multiway_registration.html#Make-a-combined-point-cloud">ref1</a>]
+[<a class="reference external" href="http://www.open3d.org/docs/latest/tutorial/Basic/rgbd_image.html">ref2</a>]</p>
+<p>Make sure to activate the conda environment (monorec with open3d installation):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>pcl
+</pre></div>
+</div>
+<p>E.g.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>rgbd2pcl.py<span class="w"> </span>--config<span class="w"> </span>configs/test/pointcloud_monorec_euroc.json
+</pre></div>
+</div>
+</section>
+<section id="inference">
+<h2>Inference<a class="headerlink" href="#inference" title="Link to this heading"></a></h2>
+<p>The <a class="reference external" href="https://github.com/RobotVisionHKA/MonoRec/blob/main/example-tumvi">example-tumvi</a> folder can be used to test the forward pass using the tum-vi dataloader.
+The <a class="reference external" href="https://github.com/RobotVisionHKA/MonoRec/blob/main/example-tumvi/test_monorec.py">test_monorec.py</a> script can be used to
+test inference on an entire dataset i.e. with multiple sequences, and
+the <a class="reference external" href="https://github.com/RobotVisionHKA/MonoRec/blob/main/example-tumvi/test_monorec_seq.py">test_monorec_seq.py</a>
+can be used to test inference on a single sequence.</p>
+<p>Make sure to activate the conda environment for both inference and training using:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>monorec
+</pre></div>
+</div>
+<p>Usage:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>test_monorec.py
+</pre></div>
+</div>
+<p><strong>_set pretrain_mode=1 to just evaluate the depth module without using the mask module_</strong></p>
+</section>
+<section id="pointcloud-generation">
+<h2>Pointcloud generation<a class="headerlink" href="#pointcloud-generation" title="Link to this heading"></a></h2>
+<p>To evaluate the model, a pointcloud can be generated. <a class="reference external" href="https://www.danielgm.net/cc/">CloudCompare</a> was used for
+viewing the generated pointclouds. Either <a class="reference external" href="https://github.com/RobotVisionHKA/MonoRec/blob/main/rgbd2pcl.py">rgbd2pcl.py</a> or
+<a class="reference external" href="https://github.com/RobotVisionHKA/MonoRec/blob/main/create_pointcloud.py">create_pointcloud.py</a> can be used.
+Usage of <a class="reference external" href="https://github.com/RobotVisionHKA/MonoRec/blob/main/rgbd2pcl.py">rgbd2pcl.py</a> is mentioned above.</p>
+<p>Usage for <a class="reference external" href="https://github.com/RobotVisionHKA/MonoRec/blob/main/create_pointcloud.py">create_pointcloud.py</a>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>create_pointcloud.py<span class="w"> </span>--config<span class="w"> </span>configs/test/pointcloud_monorec_tumvi.json
+</pre></div>
+</div>
+</section>
+<section id="training">
+<h2>Training<a class="headerlink" href="#training" title="Link to this heading"></a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Change Ubuntu GUI mode for better speed during training* [<a class="reference external" href="https://linuxconfig.org/how-to-disable-enable-gui-on-boot-in-ubuntu-20-04-focal-fossa-linux-desktop">ref1</a>] [<a class="reference external" href="https://medium.com/&#64;leicao.me/how-to-run-xorg-server-on-integrated-gpu-c5f38ae7ccc8">ref2</a>]
+Good practices for training on multiple GPUs [<a class="reference external" href="https://medium.com/huggingface/training-larger-batches-practical-tips-on-1-gpu-multi-gpu-distributed-setups-ec88c3e51255">ref</a>]</p>
+</div>
+<p>Run the following commands:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>train.py<span class="w"> </span>--config<span class="w"> </span>configs/train/monorec/monorec_depth_tumvi.json<span class="w"> </span>--options<span class="w"> </span>stereo<span class="w">                          </span><span class="c1"># Depth Bootstrap</span>
+python<span class="w"> </span>train_monorec.py<span class="w"> </span>--config<span class="w"> </span>configs/train/monorec/monorec_mask_tumvi.json<span class="w"> </span>--options<span class="w"> </span>stereo<span class="w">                   </span><span class="c1"># Mask Bootstrap</span>
+python<span class="w"> </span>train_monorec.py<span class="w"> </span>--config<span class="w"> </span>configs/train/monorec/monorec_mask_ref_tumvi.json<span class="w"> </span>--options<span class="w"> </span>mask_loss<span class="w">            </span><span class="c1"># Mask Refinement</span>
+python<span class="w"> </span>train_monorec.py<span class="w"> </span>--config<span class="w"> </span>configs/train/monorec/monorec_depth_ref_tumvi.json<span class="w"> </span>--options<span class="w"> </span>stereo<span class="w"> </span>stereo_repr<span class="w">  </span><span class="c1"># Depth Refinement</span>
+</pre></div>
+</div>
+<p>To monitor the training using tensorboard, set the parameter <code class="docutils literal notranslate"><span class="pre">tensorboard</span></code> to <code class="docutils literal notranslate"><span class="pre">true</span></code> in the config, and run the command below in a separate terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>MonoRec$<span class="w"> </span>tensorboard<span class="w"> </span>--logdir<span class="o">=</span>saved/log/monorec_depth/00
+</pre></div>
+</div>
+</section>
+<section id="important-hyperparameters-for-tum-vi-realsense-bag">
+<h2>Important Hyperparameters for TUM-VI/RealSense-Bag<a class="headerlink" href="#important-hyperparameters-for-tum-vi-realsense-bag" title="Link to this heading"></a></h2>
+<p>Some hyperparameters needed to be tuned differently for the TUM-VI dataset or the dataset recorded using the RealSense from the ones used in the paper for the KITTI dataset:</p>
+<ol class="arabic simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">inv_depth_min_max</span></code> parameter must be set to (1.0, 0.0025) for training as the dataset has been recorded using a hand-held device as opposed to a device mounted on a car (KITTI).</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">step_size</span></code> and <code class="docutils literal notranslate"><span class="pre">gamma</span></code> parameters of the <code class="docutils literal notranslate"><span class="pre">lr_scheduler</span></code> must be properly tuned keeping in mind the size of the dataset.</p></li>
+<li><p>The parameter <code class="docutils literal notranslate"><span class="pre">alpha</span></code> which is responsible for assigning weight to the <code class="docutils literal notranslate"><span class="pre">sparse_depth_loss</span></code> and the <code class="docutils literal notranslate"><span class="pre">self_supervision_loss</span></code> (combination of photometric_inconsistency_cv and edge_aware_smoothness_loss) must be set properly after observing the intermediate results during training.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">num_workers</span></code> and <code class="docutils literal notranslate"><span class="pre">batch_size</span></code> parameters must be set considering the compute power, size of dataset etc. [<a class="reference external" href="https://chtalhaanwar.medium.com/pytorch-num-workers-a-tip-for-speedy-training-ed127d825db7">ref1</a>] [<a class="reference external" href="https://deeplizard.com/learn/video/kWVgvsejXsE">ref2</a>]</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="basalt.html" class="btn btn-neutral float-left" title="Basalt - Visual Inertial Odometry" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../developers.html" class="btn btn-neutral float-right" title="Main developers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Robot Vision Lab, HKA. Author(s): Hardik Shah, Niclas Zeller.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
